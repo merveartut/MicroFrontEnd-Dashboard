@@ -26,8 +26,25 @@ This project uses a **Shell/Remote** pattern. Instead of Webpack's Module Federa
 
 ## 🚀 Getting Started
 
-<Steps>
+
 ### Install Dependencies
 Run this in the root of the monorepo:
 ```bash
 npm install
+```
+
+### Build the Shared Store
+
+```bash
+npm run build --workspace=@mfe/store
+```
+### Run The Application
+
+You need to open separate terminal windows for each application to run them simultaneously. Fixed ports are required so the Shell can locate the Remotes.
+
+
+| Application | Terminal Command  | Local Port  |
+| ------- | --- | --- |
+| Shell (Host) | npm run dev --workspace=shell | 5000 |
+| Finance App | npm run dev --workspace=finance | 5001 |
+| Trends App | npm run dev --workspace=trends | 5002 |
