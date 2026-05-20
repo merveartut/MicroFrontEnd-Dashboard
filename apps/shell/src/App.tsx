@@ -1,4 +1,5 @@
-import React, { Suspense } from "react";
+///home/merve/mfe/apps/shell/src/App.tsx
+import React, { Suspense, useEffect } from "react";
 import { Card } from "@mfe/ui-library";
 import { useSystemStore, useThemeStore } from "@mfe/store";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -9,9 +10,41 @@ const TrendsChart = React.lazy(() => import("trendsApp/TechTrends"));
 function App() {
   const { isDarkMode, toggleTheme } = useThemeStore();
   const { status } = useSystemStore();
+const updateStatus = useSystemStore((state: any) => state.updateStatus)
+
+useEffect(() => {
+  const checkMfeHealth = async () => {
+    const remotes = [
+      {name: "finance", url: "http://localhost:5001/assets/remoteEntry.js"},
+      { name: "trends", url: "http://localhost:5002/assets/remoteEntry.js" }
+
+    ]
+    for (const mfe of remotes) {
+      try {
+        const response = await fetch(mfe.url, {
+          method: "HEAD",
+          cache: "no-store",
+          mode: "cors"
+        })
+
+        if (response.ok) {
+          updateStatus(mfe.name as any, "online")
+        } else {
+          updateStatus(mfe.name as any, "offline")
+        }
+      } catch{
+        updateStatus(mfe.name as any, "offline")
+    }
+    } 
+  }
+  checkMfeHealth()
+  const interval = setInterval(checkMfeHealth, 5000)
+  return () => clearInterval(interval)
+}, [updateStatus])
+
   const StatusRow = ({ label, state }: { label: string; state: string }) => (
     <div className="flex justify-between items-center text-[11px]">
-      <span className="text-slate-400">{label}</span>
+      <span className="dark:text-slate-400 text-slate-800">{label}</span>
       <span
         className={`flex items-center gap-1.5 font-bold ${
           state === "online"
@@ -54,28 +87,28 @@ function App() {
             Somethings on live
           </h1>
 
-          <div className="mt-auto p-4 bg-slate-800/50 rounded-xl border border-slate-700">
+          <div className="mt-auto p-4 bg-[#F8FAFC] dark:bg-slate-800/50 rounded-xl border border-slate-700">
             <h4 className="text-[10px] font-bold text-slate-500 uppercase mb-3">
-              Sistem Sağlığı
+              System Health
             </h4>
             <div className="space-y-2">
-              <StatusRow label="Finans Servisi" state={status.finance} />
-              <StatusRow label="Teknoloji Analizi" state={status.trends} />
+              <StatusRow label="Finance Service" state={status.finance} />
+              <StatusRow label="Tech Trends Service" state={status.trends} />
             </div>
           </div>
         </header>
 
-        {/* MFE Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full items-start">
-          <Card title="Piyasa Analizi" badge="Canlı" subtitle="Döviz kurları">
+          <Card title="Market Analysis" badge="Live" subtitle="Exchange rates">
             <ErrorBoundary
+            moduleName="finance"
               fallback={
                 <div className="p-8 text-center">
                   <p className="text-rose-500 font-bold text-xs uppercase">
-                    Bağlantı Kesildi
+                    Connection Failed
                   </p>
                   <p className="text-slate-400 text-[10px] mt-1 italic font-medium">
-                    Finans servisi şu an ulaşılamaz durumda.
+                    Finance Service Unavailable.
                   </p>
                 </div>
               }
@@ -83,7 +116,7 @@ function App() {
               <Suspense
                 fallback={
                   <div className="p-12 animate-pulse text-slate-400 text-center">
-                    Yükleniyor...
+                    Loading...
                   </div>
                 }
               >
@@ -93,18 +126,19 @@ function App() {
           </Card>
 
           <Card
-            title="Framework Yarışı"
-            badge="Haftalık"
-            subtitle="GitHub yıldız sayıları"
+            title="Framework Race"
+            badge="Weekly"
+            subtitle="GitHub stars count"
           >
             <ErrorBoundary
+            moduleName="trends"
               fallback={
                 <div className="p-8 text-center">
                   <p className="text-rose-500 font-bold text-xs uppercase">
-                    Bağlantı Kesildi
+                     Connection Failed
                   </p>
                   <p className="text-slate-400 text-[10px] mt-1 italic font-medium">
-                    Teknoloji trendleri servisi şu an ulaşılamaz durumda.
+                     Tech Trends Service Unavailable.
                   </p>
                 </div>
               }
@@ -112,7 +146,7 @@ function App() {
               <Suspense
                 fallback={
                   <div className="p-12 animate-pulse text-slate-400 text-center">
-                    Analiz ediliyor...
+                    Analyzing...
                   </div>
                 }
               >

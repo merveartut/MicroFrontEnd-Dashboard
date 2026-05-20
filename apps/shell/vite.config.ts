@@ -8,10 +8,10 @@ export default defineConfig({
     react(),
     federation({
       name: "shell_app",
-      remotes: {
-        financeApp: "http://localhost:5001/assets/remoteEntry.js",
-        trendsApp: "http://localhost:5002/assets/remoteEntry.js",
-      },
+    remotes: {
+  financeApp: "http://localhost:5001/assets/remoteEntry.js",
+  trendsApp: "http://localhost:5002/assets/remoteEntry.js",
+},
       shared: {
         react: {
           singleton: true,

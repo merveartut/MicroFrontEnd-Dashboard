@@ -26,7 +26,7 @@ const FinanceStats = () => {
   if (isLoading)
     return (
       <div className="p-8 animate-pulse text-slate-400 text-center text-xs">
-        Piyasalar güncelleniyor...
+        Markets are updating...
       </div>
     );
   if (isError)
@@ -100,7 +100,7 @@ const FinanceStats = () => {
       <div className="flex items-center justify-center gap-2 pt-2">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
         <span className="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">
-          TCMB Verileri ile Senkronize
+          Synchronized with TCMB Data
         </span>
       </div>
     </div>

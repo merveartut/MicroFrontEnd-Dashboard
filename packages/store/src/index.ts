@@ -1,3 +1,4 @@
+///home/merve/mfe/packages/store/src/index.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,7 +11,7 @@ interface SystemState {
   status: SystemStatus;
   updateStatus: (
     module: keyof SystemStatus,
-    state: "online" | "offline",
+    state: "online" | "offline" | "loading",
   ) => void;
 }
 
