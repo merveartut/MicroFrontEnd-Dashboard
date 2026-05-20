@@ -28,7 +28,7 @@ The project follows a **Shell (Host) + Remote** pattern. The Shell is the contai
 
 
 | Layer | Technology |
-|---|---|---|
+|---|---|
 | Bundler | Vite 7 |
 | Federation | `@originjs/vite-plugin-federation` |
 | UI Framework | React 19 |
