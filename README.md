@@ -27,15 +27,15 @@ The project follows a **Shell (Host) + Remote** pattern. The Shell is the contai
 ```
 
 
-| Layer | Technology | Why |
+| Layer | Technology |
 |---|---|---|
-| Bundler | Vite 7 | Fast dev server, native ESM output |
-| Federation | `@originjs/vite-plugin-federation` | ESM-based Module Federation for Vite |
-| UI Framework | React 19 | Shared as singleton across all apps |
-| State Management | Zustand 5 | Framework-independent store API |
-| Styling | Tailwind CSS 3 | Utility-first, no CSS conflicts between remotes |
-| Language | TypeScript | Type safety across the monorepo |
-| Package Manager | pnpm | Workspace support, fast installs |
+| Bundler | Vite 7 |
+| Federation | `@originjs/vite-plugin-federation` |
+| UI Framework | React 19 |
+| State Management | Zustand 5 |
+| Styling | Tailwind CSS 3 |
+| Language | TypeScript |
+| Package Manager | pnpm |
 
 ---
 
