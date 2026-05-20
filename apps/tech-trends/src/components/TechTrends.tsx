@@ -9,7 +9,7 @@ const fetchRepoData = async (repo: string) => {
 };
 
 const TechTrends = () => {
-  const updateStatus = useSystemStore((s) => s.updateStatus);
+  const updateStatus = useSystemStore((s: any) => s.updateStatus);
 
   useEffect(() => {
     updateStatus("trends", "online");
@@ -31,9 +31,11 @@ const TechTrends = () => {
     );
   if (results.isError)
     return <div className="p-8 text-red-500 text-xs">Veri çekilemedi.</div>;
-
+  console.log(results.data);
   const data = results.data?.map((repo) => ({
-    name: repo.name.charAt(0).toUpperCase() + repo.name.slice(1),
+    name: repo.full_name.includes("vue")
+      ? repo.owner.login.charAt(0).toUpperCase() + repo.owner.login.slice(1)
+      : repo.name.charAt(0).toUpperCase() + repo.name.slice(1),
     val: Math.min((repo.stargazers_count / 250000) * 100, 100),
     stars: `${(repo.stargazers_count / 1000).toFixed(0)}k`,
     color: repo.name.includes("react")

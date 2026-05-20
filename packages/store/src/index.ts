@@ -14,21 +14,26 @@ interface SystemState {
   ) => void;
 }
 
-export const useSystemStore = create<SystemState>((set) => ({
-  status: {
-    finance: "loading",
-    trends: "loading",
-  },
-  updateStatus: (module, nextState) => {
-    console.log(`[Store Update] Module: ${module}, State: ${nextState}`); // BU LOG KRİTİK
-    set((state) => ({
-      status: {
-        ...state.status,
-        [module]: nextState,
-      },
-    }));
-  },
-}));
+const createSystemStore = () =>
+  create<SystemState>((set) => ({
+    status: { finance: "loading", trends: "loading" },
+    updateStatus: (module, nextState) => {
+      console.log(`[Store Update] Module: ${module}, State: ${nextState}`);
+      set((state) => ({
+        status: { ...state.status, [module]: nextState },
+      }));
+    },
+  }));
+
+const getSharedStore = () => {
+  const globalGui = window as any;
+  if (!globalGui.__MFE_SYSTEM_STORE__) {
+    globalGui.__MFE_SYSTEM_STORE__ = createSystemStore();
+  }
+  return globalGui.__MFE_SYSTEM_STORE__;
+};
+
+export const useSystemStore = getSharedStore();
 
 interface ThemeState {
   isDarkMode: boolean;

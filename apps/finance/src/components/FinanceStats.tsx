@@ -10,7 +10,7 @@ const fetchRates = async () => {
 };
 
 const FinanceStats = () => {
-  const updateStatus = useSystemStore((s) => s.updateStatus);
+  const updateStatus = useSystemStore((s: any) => s.updateStatus);
 
   useEffect(() => {
     updateStatus("finance", "online");
