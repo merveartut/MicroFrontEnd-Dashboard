@@ -1,7 +1,7 @@
 
 # 🚀 Micro FrontEnd Dashboard (Vite Edition)
 
-A production-inspired Micro Frontend (MFE) architecture built with **Vite** and **Native ESM Federation**. This project demonstrates how to orchestrate multiple independent React applications under a single shell, with shared state management, runtime health monitoring, and isolated error handling.
+A production-inspired Micro Frontend (MFE) architecture built with **Vite**. This project demonstrates how to manage multiple independent React applications under a single shell, with shared state management, runtime health monitoring, and isolated error handling.
 
 ## 🏗️ Architecture
 
@@ -58,7 +58,7 @@ The `persist` middleware wraps Zustand's `set` — on every state change it writ
 
 ## 🩺 Runtime Health Monitoring
 
-The Shell polls each remote's `remoteEntry.js` every **5 seconds** with a `HEAD` request. If the request fails, the corresponding module's status is set to `offline` in the shared store. The sidebar reflects this in real time.
+The Shell polls each remote's `remoteEntry.js` every 5 seconds with a `HEAD` request. If the request fails, the corresponding module's status is set to `offline` in the shared store. The sidebar reflects this in real time.
 
 ## 🛡️ Error Isolation: ErrorBoundary
 
@@ -89,7 +89,7 @@ pnpm install
 
 ### Build shared packages
 
-Shared packages must be built before running any app. The store and ui-library are consumed as source references (`workspace:*`) but federation requires them to be resolvable.
+Shared packages must be built before running any app. The store and ui-library are consumed as source references (`workspace:*`) but federation requires them to be resolvable at runtime.
 
 ```bash
 pnpm --filter @mfe/store build
