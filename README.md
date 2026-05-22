@@ -1,5 +1,5 @@
 
-# 🚀 Micro FrontEnd Dashboard (Vite Edition)
+# 🚀 Micro FrontEnd Dashboard (Vite Federation)
 
 A production-inspired Micro Frontend (MFE) architecture built with **Vite**. This project demonstrates how to manage multiple independent React applications under a single shell, with shared state management, runtime health monitoring, and isolated error handling.
 
